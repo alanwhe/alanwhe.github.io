@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Interactive Research Poster</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    /* ======================================================
+       COLOR VARIABLES — EDIT THESE
+    ====================================================== */
+
+    :root {
+    /*["#00A0C8", "#ff0040", "#008b41", "#f38200"]*/
+      --accent-1: #00A0C8;
+      --accent-2: #008b41;
+      --accent-3: #f38200;
+      --accent-4: #ff0040;
+
+      --bg: #ffffff;
+
+      --text: #111111;
+      --text-light: #323232;
+
+      --border: #e5e5e5;
+
+      --card-bg: #fafafa;
+
+      --shadow:
+        0px 8px 30px rgba(0,0,0,0.08);
+
+      --radius: 24px;
+
+      --transition:
+        0.45s cubic-bezier(.2,.8,.2,1);
+    }
+
+    /* ======================================================
+       GLOBAL
+    ====================================================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+    }
+
+    section {
+      width: min(1300px, 92%);
+      margin: auto;
+      padding: 5rem 0;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      color: var(--text-light);
+      font-size: 1.02rem;
+    }
+
+    /* ======================================================
+       PAGE HEADER
+    ====================================================== */
+
+    .page-header {
+      padding-top: 4rem;
+      padding-bottom: 2rem;
+    }
+
+    .title {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      max-width: 1000px;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      max-width: 900px;
+      font-size: 1.15rem;
+    }
+
+    .author-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .tag {
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      background: var(--card-bg);
+      border: 2px solid var(--accent-1);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* ======================================================
+       SECTION LABELS
+    ====================================================== */
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-bar {
+      width: 12px;
+      height: 50px;
+      border-radius: 999px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+    }
+
+    /* ======================================================
+       STAGGERED GRID
+    ====================================================== */
+
+    .poster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+
+      transition: transform var(--transition);
+      position: relative;
+
+      opacity: 0;
+      transform: translateY(40px);
+
+      animation: fadeUp 1s forwards;
+    }
+
+    .panel:hover {
+      transform: translateY(-8px);
+    }
+
+    .panel:nth-child(2) {
+      margin-top: 0px;
+      animation-delay: 0.2s;
+    }
+
+    .panel:nth-child(3) {
+      margin-top: 0px;
+      animation-delay: 0.4s;
+    }
+
+    .panel:nth-child(4) {
+      margin-top: 0px;
+      animation-delay: 0.6s;
+    }
+
+    .panel-image {
+      aspect-ratio: 4 / 3;
+      overflow: visible;
+    }
+
+    .panel-image img {
+      height: 100%;
+      object-fit: cover;
+
+      transition: transform 0.7s ease;
+    }
+
+    .panel:hover img {
+      transform: scale(1.04);
+    }
+
+    .panel-content {
+      padding: 1.7rem;
+    }
+
+    .panel-content h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ======================================================
+       FEATURE BLOCKS
+    ====================================================== */
+
+    .feature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .feature.reverse .feature-image {
+      order: -1;
+    }
+
+    .feature-text h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      margin-bottom: 1rem;
+    }
+
+    .feature-text p {
+      margin-bottom: 1rem;
+    }
+
+    .feature-image img {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    /* ======================================================
+       HIGHLIGHT STAT BOXES
+    ====================================================== */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .stat-card {
+      padding: 2rem;
+      border-radius: var(--radius);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+    }
+
+    .stat-card h3 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card p {
+      font-size: 0.95rem;
+    }
+
+    /* ======================================================
+       COLOR UTILITIES
+    ====================================================== */
+
+    .c1 { background: var(--accent-1); }
+    .c2 { background: var(--accent-2); }
+    .c3 { background: var(--accent-3); }
+    .c4 { background: var(--accent-4); }
+
+    .text-c1 { color: var(--accent-1); }
+    .text-c2 { color: var(--accent-2); }
+    .text-c3 { color: var(--accent-3); }
+    .text-c4 { color: var(--accent-4); }
+
+    /* ======================================================
+       FOOTER
+    ====================================================== */
+
+    footer {
+      width: min(1300px, 92%);
+      margin: auto;
+      padding: 4rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      text-align: center;
+    }
+
+    /* ======================================================
+       ANIMATIONS
+    ====================================================== */
+
+    @keyframes fadeUp {
+
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ======================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (max-width: 900px) {
+
+      .feature,
+      .feature.reverse {
+        grid-template-columns: 1fr;
+      }
+
+      .feature.reverse .feature-image {
+        order: 0;
+      }
+
+      .panel:nth-child(n) {
+        margin-top: 0;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ====================================================
+       TITLE / INTRO
+  ===================================================== -->
+
+  <section class="page-header">
+
+    <h1 class="title">
+      Spatial and Temporal Trends in Southern Ocean Eddy Kinetic Energy
+    </h1>
+
+    <p class="subtitle">
+      An interactive digital version of the poster presented at the 2026 AOSC Senior Research Symposium.
+    </p>
+
+    <div class="author-row">
+
+      <div class="tag">
+        Alan Whelan, Dr. Madeleine Youngs
+      </div>
+
+      <div class="tag">
+        University of Maryland Department of Atmospheric and Oceanic Science
+      </div>
+
+      <div class="tag">
+        AOSC Senior Research Symposium 2026
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ====================================================
+       BACKGROUND
+  ===================================================== -->
+
+  <section>
+
+    <div class="section-heading">
+      <div class="section-bar c1"></div>
+      <h2>Background</h2>
+    </div>
+
+    <div class="feature">
+
+      <div class="feature-text">
+
+        <p>
+          Surface winds over the Southern
+Ocean have been increasing with
+time, leading to changes in ocean
+surface kinetic energy that may
+affect the Earth's carbon cycle in
+ways not yet understood</p>
+
+
+      </div>
+      <p>
+          In particular, these changes are
+predicted to be varied based on
+prior research examining larger
+Southern Ocean subregions. This
+research examined the role of
+topography in these regional
+differences, demonstrating the
+importance of local topography.
+        </p>
+      
+
+    </div>
+    <div class="feature-image">
+        <img
+          src="assets/neweke/Picture2.png"
+          alt="Background figure"
+        >
+      </div>
+
+  </section>
+
+  <!-- ====================================================
+       METHODS
+  ===================================================== -->
+
+  <section>
+
+    <div class="section-heading">
+      <div class="section-bar c2"></div>
+      <h2>Methods</h2>
+    </div>
+
+    <div class="poster-grid">
+
+      <div class="panel">
+
+        <!--<div class="panel-image">
+          <img
+            src="https://picsum.photos/800/600?random=1"
+            alt="Methods figure"
+          >
+        </div>-->
+
+        <div class="panel-content">
+
+          <h3 class="text-c2">
+            Data Sources
+          </h3>
+
+          <p>
+            Sea surface height anomaly data were used to diagnose
+            jet position variability and mesoscale activity.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="panel">
+<!--
+        <div class="panel-image">
+          <img
+            src="https://picsum.photos/800/600?random=2"
+            alt="Methods figure"
+          >
+        </div>-->
+
+        <div class="panel-content">
+
+          <h3 class="text-c2">
+            EKE Calculation
+          </h3>
+
+          <p>
+            1. The anomalies from the time-mean
+velocities as provided by the sea surface
+heights product are calculated.
+</p><p>2. The east-west component (u') and the
+north-south component (v') are used to
+calculate eddy kinetic energy</p>
+
+        </div>
+
+      </div>
+
+      <div class="panel">
+<!--
+        <div class="panel-image">
+          <img
+            src="https://picsum.photos/800/600?random=3"
+            alt="Methods figure"
+          >
+        </div>
+      -->
+        <div class="panel-content">
+
+          <h3 class="text-c2">
+            Estimation of Meander Curvature
+          </h3>
+
+          <p>
+            The length of the meander between two
+longitudes is understood to be correlated
+with the curvature of the meander. In other
+words, if the segment of the meander
+contained within a region is curvier, it have
+a longer path length than a straight
+segment, as in the proposed mechanism.</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ====================================================
+       RESULTS
+  ===================================================== -->
+
+  <section>
+<!-- ====================================================
+     INTERACTIVE RESULTS SUBSECTION
+     FREE-FLOATING POSTER FIGURES
+===================================================== -->
+
+<section class="interactive-results">
+
+  <!-- Section Heading -->
+  <div class="section-heading">
+    <div class="section-bar c3"></div>
+    <h2>Interactive Results</h2>
+  </div>
+
+  <p class="interactive-description">
+    Reveal figures progressively using the arrow button,
+    or continue scrolling normally through the poster.
+  </p>
+
+  <!-- Reveal Button -->
+  <div class="plot-controls">
+
+    <button id="nextPlotButton" class="plot-button">
+      ↓ Reveal Next Figure
+    </button>
+
+  </div>
+
+  <!-- =========================================
+       WIDESCREEN POSTER CANVAS
+  ========================================== -->
+
+  <div class="plot-stage">
+
+    <!-- FIGURE 1 -->
+    <img
+      src="assets/neweke/Picture1.png"
+      class="floating-plot"
+      id="plot1"
+      alt="Figure 1"
+    >
+
+    <!-- FIGURE 2 -->
+    <img
+      src="assets/neweke/Picture3.png"
+      class="floating-plot"
+      id="plot2"
+      alt="Figure 2"
+    >
+
+    <!-- FIGURE 3 -->
+    <img
+      src="assets/neweke/Picture4.png"
+      class="floating-plot"
+      id="plot3"
+      alt="Figure 3"
+    >
+
+    <!-- FIGURE 4 -->
+    <img
+      src="assets/neweke/Picture5.png"
+      class="floating-plot"
+      id="plot4"
+      alt="Figure 4"
+    >
+
+    <img
+      src="assets/neweke/Picture1.png"
+      class="floating-plot"
+      id="plot5"
+      alt="Figure 5"
+    >
+    <!-- OPTIONAL TEXT BLOCK 
+    <div class="floating-text hidden-plot" id="text1">
+
+      <h3>Enhanced Eddy Variability</h3>
+
+      <p>
+        Regions of strong curvature corresponded with elevated
+        mesoscale variability and altered downstream transport.
+      </p>
+
+    </div>
+  -->
+  </div>
+
+</section>
+
+<!-- ====================================================
+     CSS
+===================================================== -->
+
+<style>
+
+  .interactive-results {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .interactive-description {
+    margin-bottom: 2rem;
+    max-width: 850px;
+  }
+
+  /* =========================================
+     BUTTON
+  ========================================== */
+
+  .plot-controls {
+    margin-bottom: 2rem;
+  }
+
+  .plot-button {
+
+    border: none;
+
+    background: var(--accent-3);
+
+    color: white;
+
+    padding:
+      1rem
+      1.5rem;
+
+    border-radius: 999px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  .plot-button:hover {
+    transform: translateY(-2px);
+  }
+
+  /* =========================================
+     POSTER CANVAS
+  ========================================== */
+
+  .plot-stage {
+
+    position: relative;
+
+    width: min(1200px, 90vw);
+
+    aspect-ratio: 16 / 9;
+
+    margin: auto;
+
+    overflow: hidden;
+
+    border-radius: 24px;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgb(255, 255, 255),
+        rgb(255, 255, 255)
+      );
+
+    border: 1px solid var(--border);
+  }
+
+  /* =========================================
+     FREE FLOATING FIGURES
+  ========================================== */
+
+  .floating-plot,
+  .floating-text {
+
+    position: absolute;
+
+    opacity: 0;
+
+    transform:
+      /* translateY(30px) */
+      scale(0.96);
+
+    transition:
+      opacity 0.8s ease,
+      transform 0.8s ease;
+  }
+
+  .floating-plot.visible,
+  .floating-text.visible {
+
+    opacity: 1;
+
+    transform:
+      /* translateY(0) */
+      scale(1);
+  }
+
+  /* =========================================
+     IMAGE STYLING
+  ========================================== */
+
+  .floating-plot {
+
+    object-fit: cover;
+
+    /*box-shadow:
+      0 10px 30px rgba(0,0,0,0.12);*/
+  }
+
+  /* =========================================
+     OPTIONAL TEXT BLOCK
+  ========================================== */
+
+  .floating-text {
+
+    width: 320px;
+
+    background: rgba(255,255,255,0.9);
+
+    padding: 1.5rem;
+
+    border-radius: 18px;
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid var(--border);
+  }
+
+  .floating-text h3 {
+    margin-bottom: 0.75rem;
+    color: var(--accent-3);
+  }
+
+  /* =========================================
+     MANUAL FIGURE POSITIONS
+     TREAT THIS LIKE A POWERPOINT SLIDE
+  ========================================== */
+
+  #plot1 {
+
+    width: 40%;
+
+    top: 40%;
+    left: 30%;
+
+    
+  }
+
+  #plot2 {
+
+    width: 30%;
+
+    top: 95%;
+    right: 95%;
+
+    
+  }
+
+  #plot3 {
+
+    width: 34%;
+
+    top: 5%;
+    left: 5%;
+
+    
+  }
+
+  #plot4 {
+
+    width: 22%;
+
+    bottom: 10%;
+    right: 10%;
+
+    
+  }
+
+    #plot5 {
+
+    width: 44%;
+
+    top: 95%;
+    right: 10%;
+    transform: rotate(-30deg)
+    
+  }
+
+  #text1 {
+
+    top: 42%;
+    right: 34%;
+  }
+
+  /* =========================================
+     MOBILE
+  ========================================== */
+
+  @media (max-width: 900px) {
+
+    .plot-stage {
+
+      aspect-ratio: auto;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 2rem;
+
+      padding: 2rem;
+    }
+
+    .floating-plot,
+    .floating-text {
+
+      position: relative !important;
+
+      width: 100% !important;
+
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+
+      transform: none !important;
+
+      opacity: 1 !important;
+    }
+  }
+
+
+</style>
+
+<!-- ====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+  const revealItems = [
+
+    document.getElementById("plot1"),
+    document.getElementById("plot3")
+    //document.getElementById("plot5"),
+    //document.getElementById("plot2"),
+    //document.getElementById("plot2"),
+    //document.getElementById("text1")
+
+  ];
+
+  let currentItem = 0;
+
+  const revealButton =
+    document.getElementById("nextPlotButton");
+
+  revealButton.addEventListener("click", () => {
+
+    if (currentItem < revealItems.length) {
+
+      revealItems[currentItem]
+        .classList
+        .add("visible");
+
+      currentItem++;
+    }
+
+    if (currentItem >= revealItems.length) {
+
+      revealButton.disabled = true;
+
+      revealButton.innerText =
+        "All Figures Revealed";
+    }
+
+  });
+
+</script>
+
+
+  </section>
+
+  <!-- ====================================================
+       CONCLUSIONS
+  ===================================================== -->
+
+  <section>
+
+    <div class="section-heading">
+      <div class="section-bar c4"></div>
+      <h2>Conclusions</h2>
+    </div>
+
+    <div class="poster-grid">
+
+      <div class="panel">
+
+        <div class="panel-content">
+
+          <h3 class="text-c4">
+            EKE Trends
+          </h3>
+
+          <p>EKE is observed to be both elevated and
+increasing at a greater rate downstream of
+undersea ridges in the Southern Ocean</p>
+          
+
+        </div>
+
+      </div>
+
+      <div class="panel">
+
+        <div class="panel-content">
+
+          <h3 class="text-c3">
+            Curvature Trends
+          </h3>
+
+          <p>Trends in meander length are less consistent, but
+also more positive downstream of undersea ridges.</p>
+
+        </div>
+
+      </div>
+
+      <div class="panel">
+
+        <div class="panel-content">
+
+          <h3 class="text-c2">
+            EKE and Curvature
+          </h3>
+
+          <p>
+            EKE and curvature are generally more closely
+correlated over smaller regions than the entire
+Southern Ocean.
+          </p>
+          <p>This slight positive correlation is still weak, with
+little to no improvement with different lag values</p>
+          <p>Further, this relationship does not appear to differ
+based on whether the smaller region is upstream or
+downstream of an undersea ridge.</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ====================================================
+       FOOTER
+  ===================================================== -->
+
+  <footer>
+
+    <p>
+      Interactive Southern Ocean EKE - Alan Whelan - 2026
+    </p>
+
+  </footer>
+
+</body>
+</html>

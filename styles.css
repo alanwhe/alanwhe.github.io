@@ -1,0 +1,91 @@
+html {
+	background-image: linear-gradient(#ff6600, SeaShell);
+	background-size: cover;
+	height: 400%;
+}
+
+img {
+	border-radius: 10px;
+}
+
+h1 {
+	color: #ff6600;
+	border: 2px solid SeaShell;
+	font-family: Verdana, sans-serif;
+	padding: 30px;
+	border-radius: 10px;
+	background-color: SeaShell;
+}
+
+h2 {
+	color: #ff6600;
+	border: 2px solid SeaShell;
+	font-family: Verdana, sans-serif;
+	padding: 30px;
+	border-radius: 10px;
+	background-color: SeaShell;
+}
+
+p {
+	color: SeaShell;
+	border: 2px solid #ff6600;
+	font-family: Verdana, sans-serif;
+	padding: 30px;
+	border-radius: 10px;
+	background-color: #ff6600;
+}
+
+a {
+	font-family: Verdana, sans-serif;
+}
+
+.sidebar {
+	margin: 0;
+	padding: 0;
+	width: 160px;
+	background-color: #f1f1f1;
+	position: fixed;
+	overflow: auto;
+	border-radius: 10px;
+}
+
+.sidebar a {
+	display: block;
+	color: #ff6600;
+	padding: 16px;
+	border-radius: 10px;
+}
+
+.sidebar a.active {
+	background-color: #b34700;
+	border-radius: 10px;
+	color: SeaShell;
+}
+
+.sidebar a:hover:not(.active) {
+	background-color: #ff6600;
+	border-radius: 10px;
+	color: SeaShell;
+}
+
+.main {
+	margin-left: 160px;
+	padding: 0px 10px 10px 10px;
+}
+
+.flex-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 5px;
+}
+
+.flex-container button {
+	border-radius: 10px;
+	background-color: SeaShell;
+}
+
+.flex-container button:hover {
+	border-radius: 10px;
+	background-color: #ffe0cc;
+}
