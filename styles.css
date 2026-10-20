@@ -9,7 +9,7 @@ img {
 }
 
 h1 {
-	color: #ff6600;
+	color: #953c00;
 	border: 2px solid SeaShell;
 	font-family: Verdana, sans-serif;
 	padding: 30px;
@@ -18,7 +18,7 @@ h1 {
 }
 
 h2 {
-	color: #ff6600;
+	color: #b24700;
 	border: 2px solid SeaShell;
 	font-family: Verdana, sans-serif;
 	padding: 30px;
@@ -28,11 +28,11 @@ h2 {
 
 p {
 	color: SeaShell;
-	border: 2px solid #ff6600;
+	border: 2px solid #ab4400;
 	font-family: Verdana, sans-serif;
 	padding: 30px;
 	border-radius: 10px;
-	background-color: #ff6600;
+	background-color: #b84900;
 }
 
 a {
@@ -51,7 +51,7 @@ a {
 
 .sidebar a {
 	display: block;
-	color: #ff6600;
+	color: #d65500;
 	padding: 16px;
 	border-radius: 10px;
 }
@@ -63,7 +63,7 @@ a {
 }
 
 .sidebar a:hover:not(.active) {
-	background-color: #ff6600;
+	background-color: #d95700;
 	border-radius: 10px;
 	color: SeaShell;
 }
