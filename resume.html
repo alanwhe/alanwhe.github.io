@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View and download my resume.">
+    <title>My Resume</title>
+
+
+<body>
+    <header>
+        <h1>My Resume</h1>
+
+        <a
+            class="download-button"
+            href="./resume.pdf"
+            download="resume.pdf"
+        >
+            Download PDF
+        </a>
+    </header>
+
+    <main>
+        <div class="resume-container">
+            <iframe
+                src="./resume.pdf#toolbar=1&navpanes=0"
+                title="Resume PDF viewer"
+            >
+                <p>
+                    Your browser cannot display PDFs.
+                    <a href="./cv_research.pdf">Open the resume</a>.
+                </p>
+            </iframe>
+        </div>
+    </main>
+
+    <footer>
+        © <span id="year"></span> · Resume
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+    </script>
+</body>
+</html>
